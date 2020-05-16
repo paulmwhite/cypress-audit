@@ -25,13 +25,14 @@ const lighthouse = ({ url, thresholds, opts = {}, config }) => {
     opts.port = port;
 
     return lighthouseLib(url, { disableStorageReset: true, ...opts }, config)
-      .then(
-        (results) =>
-          Object.keys(results.lhr.categories).reduce((acc, curr) => ({
+      .then((results) =>
+        Object.keys(results.lhr.categories).reduce(
+          (acc, curr) => ({
             ...acc,
             [curr]: results.lhr.categories[curr].score * 100,
-          })),
-        generateReport(opts.outputDir, results.report)
+          }),
+          generateReport(opts.outputDir, results.report)
+        )
       )
       .then(compare(thresholds));
   }
