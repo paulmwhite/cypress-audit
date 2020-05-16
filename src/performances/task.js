@@ -41,8 +41,10 @@ const lighthouse = ({ url, thresholds, opts = {}, config }) => {
 };
 
 const generateReport = (outputDir, report) => {
-  !fs.existsSync(outputDir) && fs.mkdirSync(outputDir);
   if (outputDir) {
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir);
+    }
     fs.writeFileSync(outputDir, report);
   }
 };
