@@ -31,7 +31,7 @@ const lighthouse = ({ url, thresholds, opts = {}, config }) => {
             ...acc,
             [curr]: results.lhr.categories[curr].score * 100,
           }),
-          generateReport(opts.outputDir, results.report)
+          generateReport(opts.outputDir, opts.outputName, results.report)
         )
       )
       .then(compare(thresholds));
@@ -40,12 +40,12 @@ const lighthouse = ({ url, thresholds, opts = {}, config }) => {
   return null;
 };
 
-const generateReport = (outputDir, report) => {
-  if (outputDir) {
+const generateReport = (outputDir, name, report) => {
+  if (outputDir && name && report) {
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir);
     }
-    fs.writeFileSync(outputDir, report);
+    fs.writeFileSync(`${outputDir}/${name}.html`, report);
   }
 };
 
